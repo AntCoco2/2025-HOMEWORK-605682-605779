@@ -114,6 +114,7 @@ public class Borsa {
 						attrezzi[j] = attrezzi[j+1];
 					}
 					attrezzi[attrezzi.length-1] = null;
+					this.numeroAttrezzi--;
 				}
 			}
 		}
