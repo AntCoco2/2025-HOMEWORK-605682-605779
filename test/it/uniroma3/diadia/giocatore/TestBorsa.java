@@ -88,5 +88,12 @@ class TestBorsa {
 	void TestOggettoTroppoPesante() {
 		assertFalse(borsa.addAttrezzo(mattone));
 	}
+
+	@Test
+	void TestRimuoviOggetto() {
+		borsa.addAttrezzo(arco);
+		assertNotNull(borsa.removeAttrezzo("arco"));
+		assertTrue(borsa.isEmpty());
+	}
 }
 
