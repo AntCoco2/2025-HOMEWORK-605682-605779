@@ -51,4 +51,10 @@ class TestStanza {
 		
 		
 	}
+	@Test
+	void testGHasAttrezzoFalse(){
+		assertFalse(s1.hasAttrezzo("quaderno"));
+	
+	
+}
 }
