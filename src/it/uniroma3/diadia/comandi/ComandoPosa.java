@@ -4,9 +4,8 @@ import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
-public class ComandoPosa implements Comando {
-private IO io;
-private String nomeAttrezzo;
+public class ComandoPosa extends AbstractComando {
+
 private static final String NOME = "posa";
 
 
@@ -24,23 +23,18 @@ private static final String NOME = "posa";
 		Attrezzo daAggiungere;
 		if (partita.giocatore.getBorsa().isEmpty()) {
 			io.mostraMessaggio("La borsa è vuota");
-		} else if (partita.giocatore.getBorsa().hasAttrezzo(nomeAttrezzo)) {
-			daAggiungere = partita.giocatore.getBorsa().getAttrezzo(nomeAttrezzo);
-			partita.giocatore.getBorsa().removeAttrezzo(nomeAttrezzo);
+		} else if (partita.giocatore.getBorsa().hasAttrezzo(parametro)) {
+			daAggiungere = partita.giocatore.getBorsa().getAttrezzo(parametro);
+			partita.giocatore.getBorsa().removeAttrezzo(parametro);
 			if(partita.getStanzaCorrente().addAttrezzo(daAggiungere)) {
 				io.mostraMessaggio("Oggetto posato");
 				io.mostraMessaggio(partita.giocatore.getBorsa().toString());
 			}
 			
-		} else if (partita.giocatore.getBorsa().hasAttrezzo(nomeAttrezzo)==false) {
+		} else if (partita.giocatore.getBorsa().hasAttrezzo(parametro)==false) {
 			io.mostraMessaggio("La borsa non ha questo oggetto");
 		}
 		
-	}
-
-	@Override
-	public void setParametro(String parametro) {
-		this.nomeAttrezzo = parametro;
 	}
 
 	@Override
@@ -48,17 +42,11 @@ private static final String NOME = "posa";
 		// TODO Auto-generated method stub
 		return NOME;
 	}
-
-	@Override
-	public String getParametro() {
-		// TODO Auto-generated method stub
-		return nomeAttrezzo;
-	}
-
 	@Override
 	public void setIO(IO io) {
 		this.io = io;
 	}
+
 	
 
 }

@@ -2,7 +2,7 @@ package it.uniroma3.diadia.ambienti;
 
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
-class StanzaMagica extends Stanza {
+public class StanzaMagica extends Stanza {
 	final static private int SOGLIA_MAGICA_DEFAULT = 3;
 	private int contatoreAttrezziPosati;
 	private int sogliaMagica;
@@ -32,5 +32,13 @@ class StanzaMagica extends Stanza {
 		nomeInvertito = nomeInvertito.reverse();
 		attrezzo = new Attrezzo(nomeInvertito.toString(), pesoX2);
 		return attrezzo;
+	}
+	
+	/*SOLO PER TEST*/
+	 public void setContatorePosatiFull() {
+		this.contatoreAttrezziPosati = 3;
+	}
+	public int getContatore() {
+		return this.contatoreAttrezziPosati;
 	}
 }

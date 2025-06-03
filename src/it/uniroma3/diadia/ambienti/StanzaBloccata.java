@@ -3,22 +3,28 @@ package it.uniroma3.diadia.ambienti;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class StanzaBloccata extends Stanza {
-	private String direzionebloccata;
+	private Direzione direzionebloccata;
 	private String attrezzochefapa;
 
-	public StanzaBloccata(String nome, String direzionebloccata, String attrezzochefapa) {
+	public StanzaBloccata(String nome, Direzione direzione, String attrezzochefapa) {
 		super(nome);
-		this.direzionebloccata = direzionebloccata;
+		this.direzionebloccata = direzione;
 		this.attrezzochefapa = attrezzochefapa;
 	}
 
 	@Override
-	public Stanza getStanzaAdiacente(String dir) {
-		if (this.hasAttrezzo(attrezzochefapa)) {
-			return super.getStanzaAdiacente(dir);
-		} else {
-			return this;
+	public Stanza getStanzaAdiacente(Direzione dir) {
+		Stanza stanza = null;
+		if(dir != direzionebloccata) {
+			stanza = super.getStanzaAdiacente(dir);
+		}else if(dir == direzionebloccata) {
+			if(this.hasAttrezzo(attrezzochefapa)) {
+				stanza = super.getStanzaAdiacente(dir);
+			}else {
+				stanza = this;
+			}
 		}
+		return stanza;
 	}
 
 	@Override 
@@ -31,21 +37,23 @@ public class StanzaBloccata extends Stanza {
 		StringBuilder risultato = new StringBuilder();
 		risultato.append(this.nome);
 		risultato.append("\nUscite: ");
-		for (String direzione : this.direzioni) {
+		for (Direzione direzione : this.stanzeAdiacenti.keySet()) {
 			if (direzione != null) {
 				risultato.append(" " + direzione);
-				if (direzione.equals(direzionebloccata)) {
-					risultato.append("\nDirezione bloccata" + direzione);
-				}
+			}
+		}
+		for(Direzione direzione :this.stanzeAdiacenti.keySet()) {
+			if (direzione == direzionebloccata) {
+				risultato.append("\nDirezione bloccata " + direzione);
 			}
 		}
 		risultato.append("\nAttrezzi nella stanza: ");
-		for (Attrezzo attrezzo : this.attrezzi) {
+		for (Attrezzo attrezzo : this.attrezzi.values()) {
 			if (attrezzo != null) {
 				risultato.append(attrezzo.toString() + " ");
 			}
 		}
-		risultato.append("L'attrezzo che sblocca la direzione " + this.direzionebloccata + "è " + this.attrezzochefapa);
+		risultato.append("\nL'attrezzo che sblocca la direzione " + this.direzionebloccata + " è " + this.attrezzochefapa);
 		return risultato.toString();
 	}
 }

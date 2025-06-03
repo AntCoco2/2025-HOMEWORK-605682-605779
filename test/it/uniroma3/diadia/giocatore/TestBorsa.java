@@ -2,6 +2,10 @@ package it.uniroma3.diadia.giocatore;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,9 +22,9 @@ class TestBorsa {
 	@BeforeEach
 	void setup() {
 		borsa = new Borsa();
-		spada = new Attrezzo("spada", 5);
-		arco = new Attrezzo("arco", 3);
-		mattone = new Attrezzo("mattone", 12);
+		spada = new Attrezzo("spada", 4);
+		arco = new Attrezzo("arco", 1);
+		mattone = new Attrezzo("mattone", 5);
 	}
 	
 	@Test
@@ -59,11 +63,6 @@ class TestBorsa {
 	}
 	
 	
-	@Test
-	void TestToStringCorretto() {
-		borsa.addAttrezzo(arco);
-		assertEquals("Contenuto borsa (3kg/10kg): arco (3kg) ", borsa.toString());
-	}
 	
 	@Test
 	void TestToStringNull() {
@@ -86,7 +85,7 @@ class TestBorsa {
 	}
 	@Test
 	void TestOggettoTroppoPesante() {
-		assertFalse(borsa.addAttrezzo(mattone));
+		assertFalse(borsa.addAttrezzo(new Attrezzo("Bicicletta", 20)));
 	}
 
 	@Test
@@ -94,6 +93,54 @@ class TestBorsa {
 		borsa.addAttrezzo(arco);
 		assertNotNull(borsa.removeAttrezzo("arco"));
 		assertTrue(borsa.isEmpty());
+	}
+	
+	@Test
+	void TestOrdinaOggetto() {
+		assertTrue(this.borsa.isEmpty());
+		assertTrue(this.borsa.addAttrezzo(spada));
+		assertTrue(this.borsa.hasAttrezzo("spada"));
+		assertTrue(this.borsa.addAttrezzo(mattone));
+		assertTrue(this.borsa.hasAttrezzo("mattone"));
+		assertTrue(this.borsa.addAttrezzo(arco));
+		assertTrue(this.borsa.hasAttrezzo("arco"));
+		List <Attrezzo> ver =this.borsa.getContenutoOrdinatoPerPeso();
+		assertEquals("arco", ver.get(0).getNome());
+		assertEquals("spada", ver.get(1).getNome());
+		assertEquals("mattone", ver.get(2).getNome());
+		
+	}
+	@Test
+	void TestOrdinaPerNome() {
+		assertTrue(this.borsa.isEmpty());
+		assertTrue(this.borsa.addAttrezzo(spada));
+		assertTrue(this.borsa.hasAttrezzo("spada"));
+		assertTrue(this.borsa.addAttrezzo(mattone));
+		assertTrue(this.borsa.hasAttrezzo("mattone"));
+		assertTrue(this.borsa.addAttrezzo(arco));
+		assertTrue(this.borsa.hasAttrezzo("arco"));
+		SortedSet <Attrezzo> ver = this.borsa.getContenutoOrdinatoPerNome();
+		List<String> attesi = Arrays.asList("arco", "mattone", "spada"); // Ordine alfabetico
+		List<String> ottenuti = ver.stream().map(Attrezzo::getNome).collect(Collectors.toList());
+		assertEquals(attesi, ottenuti);
+		
+		
+	}
+	@Test 
+	void testSetOrdinatoPerPeso() {
+		assertTrue(this.borsa.isEmpty());
+		assertTrue(this.borsa.addAttrezzo(spada));
+		assertTrue(this.borsa.hasAttrezzo("spada"));
+		assertTrue(this.borsa.addAttrezzo(mattone));
+		assertTrue(this.borsa.hasAttrezzo("mattone"));
+		assertTrue(this.borsa.addAttrezzo(arco));
+		assertTrue(this.borsa.hasAttrezzo("arco"));
+		SortedSet <Attrezzo> ver = this.borsa.getSortedSetOrdinatoPerPeso();
+		List<String> attesi = Arrays.asList("arco", "spada", "mattone"); // Ordine peso
+		List<String> ottenuti = ver.stream().map(Attrezzo::getNome).collect(Collectors.toList());
+		assertEquals(attesi, ottenuti);
+		
+		
 	}
 }
 

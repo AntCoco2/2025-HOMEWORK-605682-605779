@@ -2,10 +2,15 @@ package it.uniroma3.diadia;
 
 import java.util.Scanner;
 
+import it.uniroma3.diadia.ambienti.Direzione;
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.Labirinto.LabirintoBuilder;
 import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 import it.uniroma3.diadia.comandi.Comando;
 import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
+import it.uniroma3.diadia.personaggi.Mago;
+import it.uniroma3.diadia.personaggi.Cane;
 
 /**
  * Classe principale di diadia, un semplice gioco di ruolo ambientato al dia.
@@ -32,7 +37,6 @@ public class DiaDia {
 	static final private String[] elencoComandi = { "vai", "aiuto", "fine", "prendi", "posa" };
 
 	private Partita partita;
-	private String nomeAttrezzo;
 	private IO io;
 
 	/*
@@ -42,9 +46,9 @@ public class DiaDia {
 	 * @param la console di interazione con l'utente
 	 */
 
-	public DiaDia(IO io) {
+	public DiaDia(Labirinto labirinto, IO io) {
 		this.io = io;
-		this.partita = new Partita();
+		this.partita = new Partita(labirinto);
 	}
 
 	/*
@@ -52,7 +56,7 @@ public class DiaDia {
 	 * 
 	 * 
 	 */
-	public void gioca() {
+	public void gioca() throws Exception {
 		String istruzione;
 
 		this.io.mostraMessaggio(MESSAGGIO_BENVENUTO);
@@ -66,8 +70,9 @@ public class DiaDia {
 	 *
 	 * @return true se l'istruzione e' eseguita e il gioco continua, false
 	 *         altrimenti
+	 * @throws Exception
 	 */
-	private boolean processaIstruzione(String istruzione) {
+	private boolean processaIstruzione(String istruzione) throws Exception {
 		Comando comandoDaEseguire;
 		FabbricaDiComandiFisarmonica factory = new FabbricaDiComandiFisarmonica(io);
 		comandoDaEseguire = factory.costruisciComando(istruzione);
@@ -79,13 +84,17 @@ public class DiaDia {
 		return this.partita.isFinita();
 	}
 
-	
-
-
-	public static void main(String[] argc) {
+	public static void main(String[] argc) throws Exception {
 		IO io = new IOConsole();
-		DiaDia gioco = new DiaDia(io);
-		gioco.gioca();
-
+		LabirintoBuilder builder = Labirinto.newBuilder("Labirinto.txt");
+		Labirinto labirinto = builder.getLabirinto();
+		DiaDia gioco = new DiaDia(labirinto, io);
+		try {
+			gioco.gioca();
+		}finally {
+			io.chiudi();
+		}
 	}
 }
+
+

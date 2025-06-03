@@ -13,6 +13,15 @@
 package it.uniroma3.diadia;
 import java.util.Scanner;
 public class IOConsole implements IO{
+	
+	private Scanner scannerDiLinee;
+	
+	
+	public IOConsole() {
+		this.scannerDiLinee = new Scanner (System.in);
+	}
+	
+	
 	/**
 	 *Metodo che mostra un messaggio
 	 * 
@@ -26,9 +35,13 @@ public class IOConsole implements IO{
 	 * 
 	 */
 		 public String leggiRiga() {
-		 Scanner scannerDiLinee = new Scanner(System.in);
-		 String riga = scannerDiLinee.nextLine();
-		 return riga;
+		 return scannerDiLinee.nextLine();
+		 
+		 }
+		 
+		 
+		 public void chiudi() {
+			 scannerDiLinee.close();
 		 }
 		 
 

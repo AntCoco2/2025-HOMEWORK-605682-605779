@@ -1,0 +1,10 @@
+Stanze: LabCampusOne, Biblioteca, N11, Atrio
+Bloccata: Atrio chiave nord
+Buia: Biblioteca lanterna
+Inizio: LabCampusOne
+Vincente: Biblioteca
+Attrezzi: martello 10 Biblioteca
+Uscite: LabCampusOne sud Atrio
+Maghi: Atrio Merlino "Ciao" sfera
+Streghe: Biblioteca Morgana "sono morgana"
+Cani: N11 Morgan "sono morgan bau"

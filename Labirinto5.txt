@@ -1,0 +1,10 @@
+Stanze: Atrio, Biblioteca, N11
+Bloccata: Atrio chiave nord
+Buia: Biblioteca kanterna
+Inizio: Atrio
+Vincente: Biblioteca
+Attrezzi: martello 10 Biblioteca, osso 2 Atrio
+Uscite: Atrio nord Biblioteca
+Maghi: Atrio Merlino "Ciao" sfera
+Streghe: Biblioteca Morgana "sono morgana"
+Cani: N11 Morgan "sono morgan bau"

@@ -2,18 +2,27 @@ package it.uniroma3.diadia;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
+
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.Labirinto.LabirintoBuilder;
 
 class TestIOSimulator {
 
 	@Test
-	void testVittoria() {
-		String[] comandi = { "prendi osso", "posa osso", "vai nord" };
+	void testVittoria() throws Exception {
+		List<String> comandi = Arrays.asList("prendi osso", "posa osso", "vai nord");
 		IOSimulator io = new IOSimulator(comandi);
-		DiaDia dia = new DiaDia(io);
+		LabirintoBuilder builder = Labirinto.newBuilder("Labirinto5.txt");
+		Labirinto labirinto = builder.getLabirinto();
+		DiaDia dia = new DiaDia(labirinto, io);
 
 		dia.gioca();
-		String[] output = io.getMessaggi();
+		List<String> output = io.getMessaggiProdotti();
 		boolean trovato = false;
 		for (String msg : output) {
 			if ("Hai vinto!".equals(msg)) {
@@ -25,13 +34,15 @@ class TestIOSimulator {
 	}
 
 @Test
-void testPrendiOsso() {
-	String[] comandi = { "prendi osso", "posa osso", "vai nord" };
+void testPrendiOsso() throws Exception {
+	List<String> comandi = Arrays.asList( "prendi osso", "posa osso", "vai nord" );
 	IOSimulator io = new IOSimulator(comandi);
-	DiaDia dia = new DiaDia(io);
+	LabirintoBuilder builder = Labirinto.newBuilder("Labirinto5.txt");
+	Labirinto labirinto = builder.getLabirinto();
+	DiaDia dia = new DiaDia(labirinto, io);
 
 	dia.gioca();
-	String[] output = io.getMessaggi();
+	List<String> output = io.getMessaggiProdotti();
 	boolean trovato = false;
 	for (String msg : output) {
 		if ("Oggetto aggiunto alla borsa!".equals(msg)) {

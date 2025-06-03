@@ -2,13 +2,22 @@ package it.uniroma3.diadia.comandi;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.FileNotFoundException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.Partita;
+import it.uniroma3.diadia.ambienti.Direzione;
+import it.uniroma3.diadia.ambienti.FormatoFileNonValidoException;
+import it.uniroma3.diadia.ambienti.Labirinto;
+
 import it.uniroma3.diadia.ambienti.Stanza;
+import it.uniroma3.diadia.ambienti.Labirinto.LabirintoBuilder;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
+import it.uniroma3.diadia.giocatore.Borsa;
+import it.uniroma3.diadia.giocatore.Giocatore;
 
 
 class TestComandoPosa {
@@ -17,21 +26,24 @@ class TestComandoPosa {
 	private Partita partita;
 	private Stanza stanza;
 	private ComandoPosa comando;
+	private Labirinto labirinto;
+	private Giocatore giocatore;
+	private Borsa borsa;
 	@BeforeEach
-	void setUp() {
+	void setUp() throws FileNotFoundException, FormatoFileNonValidoException {
 		io = new IOConsole();
 		attrezzo = new Attrezzo("osso",2);
-		partita = new Partita();
-		stanza = new Stanza("aulaN11");
+		LabirintoBuilder builder = Labirinto.newBuilder("Labirinto3.txt");
+		Labirinto labirinto = builder.getLabirinto();
+		partita = new Partita(labirinto);
 		comando = new ComandoPosa();
-		partita.getGiocatore().getBorsa().addAttrezzo(attrezzo);
-		partita.setStanzaCorrente(stanza);
-		comando.setParametro("osso");
+		borsa = partita.getGiocatore().getBorsa();
 		comando.setIO(io);
 	}
 	
 	@Test
 	void TestGetParametro() {
+		comando.setParametro("osso");
 		assertEquals("osso",comando.getParametro());
 	}
 	
@@ -50,9 +62,18 @@ class TestComandoPosa {
 	
 	@Test
 	void TestAttrezzoPosato() {
-		comando.esegui(partita);
-		assertEquals(attrezzo,partita.getStanzaCorrente().getAttrezzo("osso"));
+	    borsa.addAttrezzo(attrezzo);
+	    comando.setParametro("osso");
+	    comando.esegui(partita);
+	    
+	    // Controlla che l'attrezzo sia presente nella stanza
+	    Attrezzo attrezzoPosato = partita.getStanzaCorrente().getAttrezzo("osso");
+	    
+	    assertNotNull(attrezzoPosato); // Verifica che l'attrezzo esista
+	    assertEquals(attrezzo.getNome(), attrezzoPosato.getNome()); // Controlla il nome dell'attrezzo
+	    assertEquals(attrezzo.getPeso(), attrezzoPosato.getPeso()); // Controlla il peso dell'attrezzo
 	}
+
 	
 	
 	

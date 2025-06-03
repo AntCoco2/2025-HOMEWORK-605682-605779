@@ -1,0 +1,10 @@
+Stanze: biblioteca, N13, N11, N12, AulaCampusOne, N14, N15
+Bloccata: AulaCampusOne chiave nord
+Buia: N12 lanterna
+Inizio: N13 
+Vincente: N11 
+Attrezzi: martello 10 biblioteca, pinza 2 N13, osso 1 N13, lanterna 2 N13, chiave 1 N13
+Uscite: biblioteca nord N13, biblioteca sud N11, N13 sud biblioteca, N11 nord biblioteca, N13 ovest N14, N14 est N13, N14 nord AulaCampusOne, AulaCampusOne sud N14, N13 est N12, N12 ovest N13, AulaCampusOne nord N15, N15 sud AulaCampusOne
+Maghi: N13 Ilaria "sono ilaria" lattina
+Streghe: biblioteca Morgana "sono morgana"
+Cani: N14 Morgan "sono morgan bau" 

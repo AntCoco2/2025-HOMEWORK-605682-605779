@@ -23,15 +23,15 @@ class TestStanza {
 	}
 	@Test
 	void stanzaAdiecente() {
-		s1.impostaStanzaAdiacente("nord", s2);
-		assertEquals(s2, s1.getStanzaAdiacente("nord"));
+		s1.impostaStanzaAdiacente(Direzione.NORD, s2);
+		assertEquals(s2, s1.getStanzaAdiacente(Direzione.NORD));
 		
 	}
 	@Test
 	void stanzaAdiacenteSame() {
-		s1.impostaStanzaAdiacente("est", s3);
-		s2.impostaStanzaAdiacente("est", s3);
-		assertSame(s2.getStanzaAdiacente("est"), s1.getStanzaAdiacente("est"));
+		s1.impostaStanzaAdiacente(Direzione.EST, s3);
+		s2.impostaStanzaAdiacente(Direzione.EST, s3);
+		assertSame(s2.getStanzaAdiacente(Direzione.EST), s1.getStanzaAdiacente(Direzione.EST));
 	}
 	@Test
 	void aggiungiAttrezzo() {
@@ -57,4 +57,16 @@ class TestStanza {
 	
 	
 }
+	@Test
+	void testNonAggiungeDuplicati() {
+		assertTrue(s1.attrezzi.isEmpty());
+		assertTrue(s1.addAttrezzo(attrezzo("palla", 3)));
+		assertTrue(s1.addAttrezzo(attrezzo("palla", 3)));
+		assertEquals(1, s1.attrezzi.size());
+		
+	}
+	@Test
+	void stanzaEmpty() {
+		assertTrue(s1.isEmpty());
+	}
 }

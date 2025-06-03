@@ -2,12 +2,19 @@ package it.uniroma3.diadia.comandi;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.FileNotFoundException;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.Partita;
+import it.uniroma3.diadia.ambienti.Direzione;
+import it.uniroma3.diadia.ambienti.FormatoFileNonValidoException;
+import it.uniroma3.diadia.ambienti.Labirinto;
+
 import it.uniroma3.diadia.ambienti.Stanza;
+import it.uniroma3.diadia.ambienti.Labirinto.LabirintoBuilder;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 
@@ -18,18 +25,20 @@ public class TestComandoPrendi {
 	private Attrezzo attrezzo;
 	private IOConsole io;
 	private ComandoPrendi comando;
+	private Labirinto labirinto;
 	
 	
 	
 	
 	@BeforeEach
-	void setUp() {
-		partita = new Partita();
+	void setUp() throws FileNotFoundException, FormatoFileNonValidoException {
+		LabirintoBuilder builder = Labirinto.newBuilder("Labirinto3.txt");
+		Labirinto labirinto = builder.getLabirinto();
+		partita = new Partita(labirinto);
 		stanza = new Stanza("atrio");
 		attrezzo= new Attrezzo("osso",2);
 		io = new IOConsole();
-		comando = new ComandoPrendi();
-		partita.setStanzaCorrente(stanza);
+		comando = new ComandoPrendi();;
 		partita.getStanzaCorrente().addAttrezzo(attrezzo);
 		comando.setIO(io);
 		comando.setParametro("osso");
@@ -38,6 +47,7 @@ public class TestComandoPrendi {
 	
 	@Test
 	void TestGetParametro() {
+		
 		assertEquals("osso",comando.getParametro());
 	}
 	
@@ -57,6 +67,7 @@ public class TestComandoPrendi {
 	
 	@Test
 	void TestEseguiComando() {
+		
 		comando.esegui(partita);
 		assertEquals(attrezzo,partita.getGiocatore().getBorsa().getAttrezzo("osso"));
 	}

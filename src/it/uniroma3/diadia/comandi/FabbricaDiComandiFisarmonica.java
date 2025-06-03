@@ -3,6 +3,7 @@ package it.uniroma3.diadia.comandi;
 import java.util.Scanner;
 
 import it.uniroma3.diadia.IO;
+import it.uniroma3.diadia.ambienti.Direzione;
 
 public class FabbricaDiComandiFisarmonica implements FabbricaDiComandi {
 	
@@ -14,7 +15,7 @@ public class FabbricaDiComandiFisarmonica implements FabbricaDiComandi {
 	}
 	
 
-    public Comando costruisciComando(String istruzione) {
+    public Comando costruisciComando(String istruzione) throws Exception {
         Scanner scannerDiParole = new Scanner(istruzione);
         String nomeComando = null;
         String parametro = null;
@@ -24,14 +25,14 @@ public class FabbricaDiComandiFisarmonica implements FabbricaDiComandi {
             nomeComando = scannerDiParole.next();
 
         if (scannerDiParole.hasNext())
-            parametro = scannerDiParole.next();
+        	parametro = scannerDiParole.next();
 
         if (nomeComando == null) {
         	comando = new ComandoNonValido();
         }
 
-        else if (nomeComando.equals("vai"))
-            comando = new ComandoVai();
+        else if (nomeComando.equals("vai") && parametro != null)
+            comando = new ComandoVai(Direzione.valueOf(parametro.toUpperCase()));
         else if (nomeComando.equals("aiuto"))
             comando = new ComandoAiuto();
         else if (nomeComando.equals("fine"))
@@ -42,6 +43,12 @@ public class FabbricaDiComandiFisarmonica implements FabbricaDiComandi {
         	comando = new ComandoPosa();
         else if (nomeComando.equals("guarda")) {
         	comando = new ComandoGuarda();
+        }else if (nomeComando.equals("regala")) {
+        	comando = new ComandoRegala();
+        }else if(nomeComando.equals("interagisci")) {
+        	comando = new ComandoInteragisci();
+        }else if(nomeComando.equals("saluta")) {
+        	comando = new ComandoSaluta();
         }
         else 
         	comando = new ComandoNonValido();

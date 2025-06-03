@@ -3,8 +3,8 @@ package it.uniroma3.diadia.comandi;
 import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.Partita;
 
-public class ComandoFine implements Comando {
-	IO io;
+public class ComandoFine extends AbstractComando {
+	
 	private final static String NOME = "fine"; 
 	private final static String MESSAGGIO_FIN = "Grazie di aver giocato!";
 	
@@ -23,27 +23,15 @@ public class ComandoFine implements Comando {
 		
 	}
 
-	@Override
-	public void setParametro(String parametro) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	@Override
 	public String getNome() {
 		return NOME;
 	}
-
-	@Override
-	public String getParametro() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public void setIO(IO io) {
 		this.io = io;
-		
 	}
 	
 
